@@ -191,7 +191,7 @@ with st.sidebar:
     st.title("Trading Philosophy")
     philosophy_nav = st.radio(
         "Trading Strategy Selection",
-        ["Performance Dashboard", "Market Maker Exposure", "Long / Short Volatility"],
+        ["Performance Dashboard", "Market Maker Exposure", "Long / Short Volatility", "Jane Street Real-Time Market Data Forecast (Kaggle Competition)"],
         key="philosophy_nav",
         label_visibility="collapsed"
     )
@@ -340,6 +340,11 @@ elif philosophy_nav == "Market Maker Exposure":
     """)
 
 elif philosophy_nav == "Long / Short Volatility":
+    st.write("""
+    Coming Soon
+    """)
+
+elif philosophy_nav == "Jane Street Real-Time Market Data Forecast (Kaggle Competition)":
     st.write("""
     Coming Soon
     """)
