@@ -295,9 +295,7 @@ if philosophy_nav == "Performance Dashboard":
 
         # Update hover template to show value and percentage change
         fig.update_traces(
-            hovertemplate="<b>Value: %{y:.2f}</b><br>" +
-                         "Change from Start: %{customdata:.2f}%<br>" +
-                         "Date: %{x}<extra></extra>"
+            hovertemplate="<b>Value: %{y:.2f}</b><br>"
         )
 
         st.plotly_chart(fig, use_container_width=True)
