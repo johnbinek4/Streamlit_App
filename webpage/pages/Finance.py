@@ -248,6 +248,7 @@ if philosophy_nav == "Performance Dashboard":
             title_x=0.5,
             xaxis_title="Date",
             yaxis_title="Value ($)",
+            yaxis_type="log",  # Add this line for log scale
             legend_title="Series",
             template="plotly_dark",
             hovermode='x unified',
