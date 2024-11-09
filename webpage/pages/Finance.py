@@ -261,10 +261,17 @@ if philosophy_nav == "Performance Dashboard":
         else:  # ALL
             plot_df = get_normalized_data(df)
 
-        # Create performance figure
-        fig = px.line(plot_df, x='Date', y=['Portfolio', 'SPXTR Index'],
-                    labels={'value': 'Normalized Value', 'variable': 'Series'},
-                    title=f'Relative Performance ({timeframe})')
+        # Calculate percentage change from start for hover info
+        plot_df['Portfolio_pct'] = (plot_df['Portfolio'] - 100).round(2)
+        plot_df['SPXTR_pct'] = (plot_df['SPXTR Index'] - 100).round(2)
+
+        # Create performance figure with custom data
+        fig = px.line(plot_df, 
+                     x='Date', 
+                     y=['Portfolio', 'SPXTR Index'],
+                     labels={'value': 'Normalized Value', 'variable': 'Series'},
+                     title=f'Relative Performance ({timeframe})',
+                     custom_data=[plot_df['Portfolio_pct'], plot_df['SPXTR_pct']])
 
         fig.update_layout(
             height=500,
@@ -286,9 +293,11 @@ if philosophy_nav == "Performance Dashboard":
             )
         )
 
-        # Update hover template to show both normalized and percentage change
+        # Update hover template to show value and percentage change
         fig.update_traces(
-            hovertemplate="<b>%{y:.1f}</b> (%{y:.1%} from start)<br>%{x}<extra></extra>"
+            hovertemplate="<b>Value: %{y:.2f}</b><br>" +
+                         "Change from Start: %{customdata:.2f}%<br>" +
+                         "Date: %{x}<extra></extra>"
         )
 
         st.plotly_chart(fig, use_container_width=True)
