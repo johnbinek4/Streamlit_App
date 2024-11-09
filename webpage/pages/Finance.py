@@ -58,6 +58,24 @@ monthly_returns = df.groupby('YearMonth').agg({
     'SPXTR_Return': lambda x: (1 + x).prod() - 1
 }).reset_index()
 
+def get_normalized_data(df, days=None):
+    """Normalize data for the last N days, rebasing both series to 100 at start"""
+    if days:
+        start_date = df['Date'].max() - pd.Timedelta(days=days)
+        temp_df = df[df['Date'] >= start_date].copy()
+    else:
+        temp_df = df.copy()
+    
+    # Get initial values
+    port_start = temp_df['Portfolio'].iloc[0]
+    spx_start = temp_df['SPXTR Index'].iloc[0]
+    
+    # Normalize both series to 100
+    temp_df['Portfolio'] = temp_df['Portfolio'] / port_start * 100
+    temp_df['SPXTR Index'] = temp_df['SPXTR Index'] / spx_start * 100
+    
+    return temp_df
+
 def calculate_metrics(filtered_df, monthly_rets):
     """Calculate enhanced portfolio metrics including all major risk-adjusted ratios"""
     days_in_year = 252
@@ -224,22 +242,29 @@ if philosophy_nav == "Performance Dashboard":
         )
 
     with col2:
-        # Create performance figure
-        fig = px.line(df, x='Date', y=['Portfolio', 'SPXTR Index'],
-                    labels={'value': 'Value ($)', 'variable': 'Series'},
-                    title='Performance')
-
-        fig.update_xaxes(
-            rangeslider_visible=False,
-            rangeselector=dict(
-                buttons=list([
-                    dict(count=1, label="1M", step="month", stepmode="backward"),
-                    dict(count=3, label="3M", step="month", stepmode="backward"),
-                    dict(count=1, label="YTD", step="year", stepmode="todate"),
-                    dict(step="all", label="ALL")
-                ])
-            )
+        # Add time period selector
+        timeframe = st.radio(
+            "Select Time Period",
+            ["1M", "3M", "YTD", "ALL"],
+            horizontal=True,
+            key="timeframe"
         )
+        
+        # Get normalized data based on selection
+        if timeframe == "1M":
+            plot_df = get_normalized_data(df, days=30)
+        elif timeframe == "3M":
+            plot_df = get_normalized_data(df, days=90)
+        elif timeframe == "YTD":
+            ytd_start = pd.Timestamp(df['Date'].max().year, 1, 1)
+            plot_df = get_normalized_data(df[df['Date'] >= ytd_start])
+        else:  # ALL
+            plot_df = get_normalized_data(df)
+
+        # Create performance figure
+        fig = px.line(plot_df, x='Date', y=['Portfolio', 'SPXTR Index'],
+                    labels={'value': 'Normalized Value', 'variable': 'Series'},
+                    title=f'Relative Performance ({timeframe})')
 
         fig.update_layout(
             height=500,
@@ -247,12 +272,11 @@ if philosophy_nav == "Performance Dashboard":
             title_font_size=24,
             title_x=0.5,
             xaxis_title="Date",
-            yaxis_title="Value ($)",
-            yaxis_type="log",  # Add this line for log scale
+            yaxis_title="Normalized Value (Base=100)",
+            yaxis_type="log",
             legend_title="Series",
             template="plotly_dark",
             hovermode='x unified',
-            yaxis_tickprefix='$',
             showlegend=True,
             legend=dict(
                 yanchor="top",
@@ -260,6 +284,11 @@ if philosophy_nav == "Performance Dashboard":
                 xanchor="left",
                 x=0.01
             )
+        )
+
+        # Update hover template to show both normalized and percentage change
+        fig.update_traces(
+            hovertemplate="<b>%{y:.1f}</b> (%{y:.1%} from start)<br>%{x}<extra></extra>"
         )
 
         st.plotly_chart(fig, use_container_width=True)
@@ -314,30 +343,6 @@ elif philosophy_nav == "Market Maker Exposure":
 
     ### Overview of Market Maker Hedging
     Market makers play a crucial role in providing liquidity to financial markets by continuously quoting both buy and sell prices for securities. To maintain profitability while managing risk, market makers must carefully hedge their positions. This process has become increasingly sophisticated with the exponential growth of the derivatives market over the past decade.
-    """)
-
-    # Method 1: Image from local directory
-    # Assuming your image is in a folder named 'images' in your app directory
-    # st.image("your_app/images/derivatives_growth.png", 
-    #          caption="Growth in Derivatives Market Volume",
-    #          use_column_width=True)
-
-    # Method 3: Multiple images in columns
-    # col1, col2 = st.columns(2)
-    # with col1:
-    #     st.image("your_app/images/image1.png",
-    #              caption="Market Maker Delta Exposure")
-    # with col2:
-    #     st.image("your_app/images/image2.png",
-    #              caption="Gamma Profile")
-
-    # st.image("your_app/images/hedging_animation.gif",
-    #          caption="Market Maker Hedging Animation",
-    #          use_column_width=True)
-
-    st.markdown("""
-    ### Growth of Derivatives Market
-    [Rest of your content...]
     """)
 
 elif philosophy_nav == "Long / Short Volatility":
