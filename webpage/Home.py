@@ -1,4 +1,5 @@
 import streamlit as st
+import base64
 
 # Set the page title and layout
 st.set_page_config(page_title="Home Page", layout="wide", initial_sidebar_state="collapsed")
@@ -56,10 +57,6 @@ st.markdown("""
         background-color: #e9ecef;
     }
     /* Download button styling */
-    .download-button {
-        text-align: center;
-        margin: 20px 0;
-    }
     .stButton>button {
         background-color: #0066cc;
         color: white;
@@ -67,6 +64,7 @@ st.markdown("""
         border-radius: 5px;
         border: none;
         font-size: 16px;
+        margin: 20px 0;
     }
     .stButton>button:hover {
         background-color: #0052a3;
@@ -79,33 +77,34 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Create centered container for resume display
+# Create centered container
 st.markdown('<div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">', unsafe_allow_html=True)
 
 # Add title
 st.title("John Binek")
 
 # Add download button for resume
-with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
-    btn = st.download_button(
-        label="Download Resume",
-        data=file,
-        file_name="JohnBinekQFResume.pdf",
-        mime="application/pdf"
-    )
+try:
+    with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
+        st.download_button(
+            label="Download Resume",
+            data=file,
+            file_name="JohnBinekQFResume.pdf",
+            mime="application/pdf",
+            key='download-resume'
+        )
+except Exception as e:
+    st.error(f"Error loading PDF file: {str(e)}")
+    st.info("Please ensure 'JohnBinekQFResume.pdf' is in the webpage directory")
 
-# Display PDF
-st.markdown("### Resume Preview")
-st.markdown(
-    """
-    <iframe 
-        src="webpage/JohnBinekQFResume.pdf" 
-        width="800" 
-        height="1000" 
-        style="border: none;">
-    </iframe>
-    """,
-    unsafe_allow_html=True
-)
+# Display PDF content
+try:
+    with open("webpage/JohnBinekQFResume.pdf", "rb") as f:
+        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="800" height="1000" type="application/pdf"></iframe>'
+        st.markdown(pdf_display, unsafe_allow_html=True)
+except Exception as e:
+    st.error("Error displaying PDF content")
+    st.error(f"Error details: {str(e)}")
 
 st.markdown('</div>', unsafe_allow_html=True)
