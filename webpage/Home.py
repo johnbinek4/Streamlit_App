@@ -86,7 +86,7 @@ st.markdown('<div style="display: flex; justify-content: center; flex-direction:
 st.title("John Binek")
 
 # Add download button for resume
-with open("webpage/resume.pdf", "rb") as file:
+with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
     btn = st.download_button(
         label="Download Resume",
         data=file,
@@ -99,7 +99,7 @@ st.markdown("### Resume Preview")
 st.markdown(
     """
     <iframe 
-        src="webpage/resume.pdf" 
+        src="webpage/JohnBinekQFResume.pdf" 
         width="800" 
         height="1000" 
         style="border: none;">
