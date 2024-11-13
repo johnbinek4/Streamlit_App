@@ -16,59 +16,38 @@ st.markdown("""
         #MainMenu {
             display: none;
         }
-    </style>
-""", unsafe_allow_html=True)
-
-# Add styling
-st.markdown("""
-    <style>
-    /* Add spacing and styling for content */
-    .section-heading {
-        color: #1f1f1f;
-        font-size: 24px;
-        margin-bottom: 15px;
-        font-weight: 500;
-    }
-    /* Remove default streamlit padding */
-    .block-container {
-        padding-top: 1rem;
-        padding-bottom: 0rem;
-        padding-left: 20rem;
-        padding-right: 20rem;
-    }
-    /* Navigation styling */
-    .nav-links {
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-        background-color: #f8f9fa;
-        margin-bottom: 30px;
-    }
-    .nav-links a {
-        margin: 0 20px;
-        padding: 8px 16px;
-        text-decoration: none;
-        color: #1f1f1f;
-        font-size: 18px;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-    }
-    .nav-links a:hover {
-        background-color: #e9ecef;
-    }
-    /* Download button styling */
-    .stButton>button {
-        background-color: #0066cc;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        border: none;
-        font-size: 16px;
-        margin: 20px 0;
-    }
-    .stButton>button:hover {
-        background-color: #0052a3;
-    }
+        /* Center the PDF viewer */
+        iframe {
+            display: block;
+            margin: 0 auto;
+        }
+        /* Remove default streamlit padding */
+        .block-container {
+            padding-top: 1rem;
+            padding-bottom: 0rem;
+            padding-left: 5rem;
+            padding-right: 5rem;
+        }
+        /* Navigation styling */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            margin-bottom: 30px;
+        }
+        .nav-links a {
+            margin: 0 20px;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #1f1f1f;
+            font-size: 18px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: #e9ecef;
+        }
     </style>
 
     <div class="nav-links">
@@ -76,26 +55,6 @@ st.markdown("""
         <a href="Sports">Sports</a>
     </div>
 """, unsafe_allow_html=True)
-
-# Create centered container
-st.markdown('<div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">', unsafe_allow_html=True)
-
-# Add title
-st.title("John Binek")
-
-# Add download button for resume
-try:
-    with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
-        st.download_button(
-            label="Download Resume",
-            data=file,
-            file_name="JohnBinekQFResume.pdf",
-            mime="application/pdf",
-            key='download-resume'
-        )
-except Exception as e:
-    st.error(f"Error loading PDF file: {str(e)}")
-    st.info("Please ensure 'JohnBinekQFResume.pdf' is in the webpage directory")
 
 # Display PDF content
 try:
@@ -106,5 +65,3 @@ try:
 except Exception as e:
     st.error("Error displaying PDF content")
     st.error(f"Error details: {str(e)}")
-
-st.markdown('</div>', unsafe_allow_html=True)
