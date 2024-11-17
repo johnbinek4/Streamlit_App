@@ -52,16 +52,25 @@ st.markdown("""
             color: #333;
             padding: 0 20px;
         }
+        /* Center the button container */
+        .download-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
+        /* Button styling */
+        .stButton {
+            text-align: center;
+        }
         .stButton > button {
-            margin: 0 auto;
-            display: block;
             background-color: #0066cc;
             color: white;
             padding: 12px 30px;
             border-radius: 5px;
             border: none;
             font-size: 16px;
-            margin-top: 40px;
         }
         .stButton > button:hover {
             background-color: #0052a3;
@@ -102,7 +111,8 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Resume download button
+# Centered download button
+st.markdown('<div class="download-button-container">', unsafe_allow_html=True)
 with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
     btn = st.download_button(
         label="Download Resume",
@@ -110,3 +120,4 @@ with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
         file_name="JohnBinekQFResume.pdf",
         mime="application/pdf"
     )
+st.markdown('</div>', unsafe_allow_html=True)
