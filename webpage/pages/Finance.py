@@ -219,13 +219,11 @@ if philosophy_nav == "Performance Dashboard":
     # Add introductory paragraph with styling
     st.markdown("""
         <div style='max-width: 1200px; margin: 0 auto 40px auto; text-align: justify; line-height: 1.8; font-size: 18px; color: #333; padding: 0 20px;'>
-        The performance dashboard below showcases the results of my systematic trading strategy, which combines 
-        market making and volatility trading approaches. The strategy utilizes advanced options pricing models 
-        and dynamic hedging techniques to capture alpha while maintaining strict risk management protocols. 
-        All returns are calculated net of transaction costs and represent real trading performance since May 2024.
+        Welcome to the Finance page. Below are performance statistics for my Live Traded Portfolio. Assets traded include /ES Futures, Options on these Futures and SPX Options.
+        The Sidebar goes into some specific metrics that direct my trading as well as some projects / competitions I have participated in. 
         </div>
     """, unsafe_allow_html=True)
-    
+
     col1, col2 = st.columns([1, 2], gap="small")
 
     with col1:
