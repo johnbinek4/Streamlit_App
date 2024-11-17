@@ -16,14 +16,12 @@ st.markdown("""
         #MainMenu {
             display: none;
         }
-        /* Adjust padding to ensure navigation is visible */
         .block-container {
             padding: 3rem 1rem 1rem 1rem !important;
         }
         div[data-testid="stToolbar"] {
             visibility: hidden;
         }
-        /* Navigation styling */
         .nav-links {
             display: flex;
             justify-content: center;
@@ -45,30 +43,27 @@ st.markdown("""
         .nav-links a:hover {
             background-color: #e9ecef;
         }
-        /* Content styling */
-        .content-section {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-            line-height: 1.6;
-        }
         .paragraph {
-            margin-bottom: 30px;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            text-align: justify;
+            line-height: 1.8;
             font-size: 18px;
             color: #333;
+            padding: 0 20px;
         }
-        /* Button styling */
-        .stButton>button {
+        .stButton > button {
+            margin: 0 auto;
+            display: block;
             background-color: #0066cc;
             color: white;
-            padding: 10px 25px;
+            padding: 12px 30px;
             border-radius: 5px;
             border: none;
             font-size: 16px;
-            margin-top: 30px;
+            margin-top: 40px;
         }
-        .stButton>button:hover {
+        .stButton > button:hover {
             background-color: #0052a3;
         }
     </style>
@@ -82,26 +77,28 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Content sections
+# Main content
 st.markdown("""
-    <div class="content-section">
-        <div class="paragraph">
-        Welcome! I'm John Binek, a Master's candidate in Quantitative and Computational Finance at Georgia Tech. 
-        My academic journey combines rigorous quantitative analysis with practical financial applications, 
-        preparing me for the dynamic world of quantitative trading and financial engineering.
-        </div>
-        
-        <div class="paragraph">
-        With a background in Industrial Engineering and experience in the United States Coast Guard, 
-        I bring a unique perspective to financial analysis. My military service enhanced my leadership abilities 
-        and analytical skills, particularly in intelligence operations and tactical planning.
-        </div>
-        
-        <div class="paragraph">
-        My current focus lies in derivatives pricing, algorithmic trading, and machine learning applications 
-        in finance. I'm particularly interested in market making strategies and volatility trading, 
-        combining theoretical knowledge with practical implementation.
-        </div>
+    <div class="paragraph">
+    Welcome! I'm John Binek, a Master's candidate in Quantitative and Computational Finance at Georgia Tech. 
+    My academic journey combines rigorous quantitative analysis with practical financial applications, 
+    preparing me for the dynamic world of quantitative trading and financial engineering.
+    </div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+    <div class="paragraph">
+    With a background in Industrial Engineering and experience in the United States Coast Guard, 
+    I bring a unique perspective to financial analysis. My military service enhanced my leadership abilities 
+    and analytical skills, particularly in intelligence operations and tactical planning.
+    </div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+    <div class="paragraph">
+    My current focus lies in derivatives pricing, algorithmic trading, and machine learning applications 
+    in finance. I'm particularly interested in market making strategies and volatility trading, 
+    combining theoretical knowledge with practical implementation.
     </div>
 """, unsafe_allow_html=True)
 
