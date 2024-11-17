@@ -216,7 +216,16 @@ with st.sidebar:
 
 # Handle Trading Philosophy navigation
 if philosophy_nav == "Performance Dashboard":
-    # Create two columns with metrics on left, charts on right
+    # Add introductory paragraph with styling
+    st.markdown("""
+        <div style='max-width: 1200px; margin: 0 auto 40px auto; text-align: justify; line-height: 1.8; font-size: 18px; color: #333; padding: 0 20px;'>
+        The performance dashboard below showcases the results of my systematic trading strategy, which combines 
+        market making and volatility trading approaches. The strategy utilizes advanced options pricing models 
+        and dynamic hedging techniques to capture alpha while maintaining strict risk management protocols. 
+        All returns are calculated net of transaction costs and represent real trading performance since May 2024.
+        </div>
+    """, unsafe_allow_html=True)
+    
     col1, col2 = st.columns([1, 2], gap="small")
 
     with col1:
