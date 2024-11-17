@@ -112,12 +112,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Centered download button
-st.markdown('<div class="download-button-container">', unsafe_allow_html=True)
-with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
-    btn = st.download_button(
-        label="Download Resume",
-        data=file,
-        file_name="JohnBinekQFResume.pdf",
-        mime="application/pdf"
-    )
-st.markdown('</div>', unsafe_allow_html=True)
+col1, col2, col3 = st.columns([2, 1, 2])
+
+with col2:
+    with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
+        st.download_button(
+            label="Download Resume",
+            data=file,
+            file_name="JohnBinekQFResume.pdf",
+            mime="application/pdf"
+        )
