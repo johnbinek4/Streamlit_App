@@ -16,11 +16,6 @@ st.markdown("""
         #MainMenu {
             display: none;
         }
-        /* Center the PDF viewer */
-        iframe {
-            display: block;
-            margin: 0 auto;
-        }
         /* Adjust padding to ensure navigation is visible */
         .block-container {
             padding: 3rem 1rem 1rem 1rem !important;
@@ -50,11 +45,31 @@ st.markdown("""
         .nav-links a:hover {
             background-color: #e9ecef;
         }
-        /* Ensure proper spacing for content */
-        .main-content {
-            padding-top: 20px;
-            display: flex;
-            justify-content: center;
+        /* Content styling */
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .paragraph {
+            margin-bottom: 30px;
+            font-size: 18px;
+            color: #333;
+        }
+        /* Button styling */
+        .stButton>button {
+            background-color: #0066cc;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            margin-top: 30px;
+        }
+        .stButton>button:hover {
+            background-color: #0052a3;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -67,17 +82,34 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Wrap PDF display in a div for proper spacing
-st.markdown('<div class="main-content">', unsafe_allow_html=True)
+# Content sections
+st.markdown("""
+    <div class="content-section">
+        <div class="paragraph">
+        Welcome! I'm John Binek, a Master's candidate in Quantitative and Computational Finance at Georgia Tech. 
+        My academic journey combines rigorous quantitative analysis with practical financial applications, 
+        preparing me for the dynamic world of quantitative trading and financial engineering.
+        </div>
+        
+        <div class="paragraph">
+        With a background in Industrial Engineering and experience in the United States Coast Guard, 
+        I bring a unique perspective to financial analysis. My military service enhanced my leadership abilities 
+        and analytical skills, particularly in intelligence operations and tactical planning.
+        </div>
+        
+        <div class="paragraph">
+        My current focus lies in derivatives pricing, algorithmic trading, and machine learning applications 
+        in finance. I'm particularly interested in market making strategies and volatility trading, 
+        combining theoretical knowledge with practical implementation.
+        </div>
+    </div>
+""", unsafe_allow_html=True)
 
-# Display PDF content
-try:
-    with open("webpage/JohnBinekQFResume.pdf", "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="800" height="1000" type="application/pdf"></iframe>'
-        st.markdown(pdf_display, unsafe_allow_html=True)
-except Exception as e:
-    st.error("Error displaying PDF content")
-    st.error(f"Error details: {str(e)}")
-
-st.markdown('</div>', unsafe_allow_html=True)
+# Resume download button
+with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
+    btn = st.download_button(
+        label="Download Resume",
+        data=file,
+        file_name="JohnBinekQFResume.pdf",
+        mime="application/pdf"
+    )
