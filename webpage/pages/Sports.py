@@ -188,30 +188,14 @@ if sports_nav == "Football":
    # Create columns
    col1, col2 = st.columns(2)
 
-   # AFC Column
+    # AFC Column
    with col1:
-    afc_content = f"""
-    <div style="background-color: rgba(207, 20, 43, 0.05); border: 3px solid #CF142B; padding: 20px; border-radius: 10px;">
-        <h3 style="text-align: center; color: #333; margin-bottom: 20px;">AFC</h3>
-        {''.join([f'''
-            <div class="team-row" style="background-color: {row['Background']}">
-                <div class="rank-column">{row['Rank']}</div>
-                <div class="team-info">
-                    <img src="{row['Logo']}" style="height:40px;">
-                    <span style="margin-left: 15px">{row['Team']}</span>
-                </div>
-            </div>
-        ''' for _, row in afc_df.iterrows()])}
-    </div>
-    """
-    st.markdown(afc_content, unsafe_allow_html=True)
-
-    # NFC Column
-    with col2:
-        nfc_content = f"""
-        <div style="background-color: rgba(0, 51, 141, 0.05); border: 3px solid #00338D; padding: 20px; border-radius: 10px;">
-            <h3 style="text-align: center; color: #333; margin-bottom: 20px;">NFC</h3>
-            {''.join([f'''
+        st.markdown('''
+            <div style="background-color: rgba(207, 20, 43, 0.05); border: 3px solid #CF142B; padding: 20px; border-radius: 10px;">
+        ''', unsafe_allow_html=True)
+        st.markdown("### AFC")
+        for _, row in afc_df.iterrows():
+            st.markdown(f'''
                 <div class="team-row" style="background-color: {row['Background']}">
                     <div class="rank-column">{row['Rank']}</div>
                     <div class="team-info">
@@ -219,10 +203,26 @@ if sports_nav == "Football":
                         <span style="margin-left: 15px">{row['Team']}</span>
                     </div>
                 </div>
-            ''' for _, row in nfc_df.iterrows()])}
-        </div>
-        """
-        st.markdown(nfc_content, unsafe_allow_html=True)
+            ''', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # NFC Column
+   with col2:
+        st.markdown('''
+            <div style="background-color: rgba(0, 51, 141, 0.05); border: 3px solid #00338D; padding: 20px; border-radius: 10px;">
+        ''', unsafe_allow_html=True)
+        st.markdown("### NFC")
+        for _, row in nfc_df.iterrows():
+            st.markdown(f'''
+                <div class="team-row" style="background-color: {row['Background']}">
+                    <div class="rank-column">{row['Rank']}</div>
+                    <div class="team-info">
+                        <img src="{row['Logo']}" style="height:40px;">
+                        <span style="margin-left: 15px">{row['Team']}</span>
+                    </div>
+                </div>
+            ''', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
 elif sports_nav == "Baseball":
     st.header("Baseball Analytics")
