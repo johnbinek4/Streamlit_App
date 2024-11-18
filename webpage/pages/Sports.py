@@ -152,48 +152,55 @@ with st.sidebar:
     )
 
 if sports_nav == "Football":
-   # Main title
-   st.markdown('<h1 style="text-align: center; margin-bottom: 20px;">NFL Power Rankings</h1>', unsafe_allow_html=True)
-   
-   # Add description paragraph
-   st.markdown("""
-       <div style="text-align: center; max-width: 800px; margin: 0 auto 40px auto; padding: 0 20px;">
-       Welcome to our NFL Power Rankings, where we combine advanced analytics with on-field performance metrics 
-       to rank all 32 NFL teams. Our model incorporates factors such as offensive and defensive efficiency, 
-       strength of schedule, recent performance trends, and key player metrics. Rankings are updated weekly 
-       to reflect the most recent game results and statistical trends.
-       </div>
-   """, unsafe_allow_html=True)
+    # Main title
+    st.markdown('<h1 style="text-align: center; margin-bottom: 20px;">NFL Power Rankings</h1>', unsafe_allow_html=True)
+    
+    # Add description paragraph
+    st.markdown("""
+        <div style="text-align: center; max-width: 800px; margin: 0 auto 40px auto; padding: 0 20px;">
+        Welcome to our NFL Power Rankings, where we combine advanced analytics with on-field performance metrics 
+        to rank all 32 NFL teams. Our model incorporates factors such as offensive and defensive efficiency, 
+        strength of schedule, recent performance trends, and key player metrics. Rankings are updated weekly 
+        to reflect the most recent game results and statistical trends.
+        </div>
+    """, unsafe_allow_html=True)
 
-   # Load all data
-   logos, colors = load_team_data()
-   rankings = load_rankings_data()
-   
-   # Create team lists
-   afc_teams = ['PIT', 'KC', 'BAL', 'MIA', 'JAX', 'BUF', 'CLE', 'HOU', 'IND', 'LAC', 
-                'CIN', 'NYJ', 'TEN', 'LV', 'DEN', 'NE']
-   nfc_teams = ['SF', 'DAL', 'PHI', 'DET', 'SEA', 'MIN', 'GB', 'ATL', 'NO', 'TB', 
-                'CHI', 'LAR', 'NYG', 'WAS', 'ARI', 'CAR']
-   
-   # Create DataFrames
-   afc_df = create_team_df(afc_teams, logos, colors, rankings)
-   nfc_df = create_team_df(nfc_teams, logos, colors, rankings)
-   
-   # Sort DataFrames by ranking
-   afc_df['Rank'] = pd.to_numeric(afc_df['Rank'])
-   nfc_df['Rank'] = pd.to_numeric(nfc_df['Rank'])
-   afc_df = afc_df.sort_values('Rank')
-   nfc_df = nfc_df.sort_values('Rank')
+    # Load all data
+    logos, colors = load_team_data()
+    rankings = load_rankings_data()
+    
+    # Create team lists
+    afc_teams = ['PIT', 'KC', 'BAL', 'MIA', 'JAX', 'BUF', 'CLE', 'HOU', 'IND', 'LAC', 
+                 'CIN', 'NYJ', 'TEN', 'LV', 'DEN', 'NE']
+    nfc_teams = ['SF', 'DAL', 'PHI', 'DET', 'SEA', 'MIN', 'GB', 'ATL', 'NO', 'TB', 
+                 'CHI', 'LAR', 'NYG', 'WAS', 'ARI', 'CAR']
+    
+    # Create DataFrames
+    afc_df = create_team_df(afc_teams, logos, colors, rankings)
+    nfc_df = create_team_df(nfc_teams, logos, colors, rankings)
+    
+    # Sort DataFrames by ranking
+    afc_df['Rank'] = pd.to_numeric(afc_df['Rank'])
+    nfc_df['Rank'] = pd.to_numeric(nfc_df['Rank'])
+    afc_df = afc_df.sort_values('Rank')
+    nfc_df = nfc_df.sort_values('Rank')
 
-   # Create columns
-   col1, col2 = st.columns(2)
+    # Create columns for layout
+    col1, col2 = st.columns(2)
 
-    # AFC Column
-   with col1:
+    # AFC Column with encompassing box
+    with col1:
         st.markdown('''
-            <div style="background-color: rgba(207, 20, 43, 0.05); border: 3px solid #CF142B; padding: 20px; border-radius: 10px;">
+            <div class="conference-container" style="
+                background-color: rgba(207, 20, 43, 0.05);
+                border: 3px solid #CF142B;
+                border-radius: 10px;
+                padding: 20px;
+                height: 100%;
+                ">
+                <h3 style="text-align: center; color: #CF142B; margin-bottom: 20px;">AFC</h3>
         ''', unsafe_allow_html=True)
-        st.markdown("### AFC")
+        
         for _, row in afc_df.iterrows():
             st.markdown(f'''
                 <div class="team-row" style="background-color: {row['Background']}">
@@ -204,14 +211,22 @@ if sports_nav == "Football":
                     </div>
                 </div>
             ''', unsafe_allow_html=True)
+        
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # NFC Column
-   with col2:
+    # NFC Column with encompassing box
+    with col2:
         st.markdown('''
-            <div style="background-color: rgba(0, 51, 141, 0.05); border: 3px solid #00338D; padding: 20px; border-radius: 10px;">
+            <div class="conference-container" style="
+                background-color: rgba(0, 51, 141, 0.05);
+                border: 3px solid #00338D;
+                border-radius: 10px;
+                padding: 20px;
+                height: 100%;
+                ">
+                <h3 style="text-align: center; color: #00338D; margin-bottom: 20px;">NFC</h3>
         ''', unsafe_allow_html=True)
-        st.markdown("### NFC")
+        
         for _, row in nfc_df.iterrows():
             st.markdown(f'''
                 <div class="team-row" style="background-color: {row['Background']}">
@@ -222,6 +237,7 @@ if sports_nav == "Football":
                     </div>
                 </div>
             ''', unsafe_allow_html=True)
+        
         st.markdown('</div>', unsafe_allow_html=True)
 
 elif sports_nav == "Baseball":
