@@ -67,48 +67,51 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 def load_team_data():
-    """Load team data using correct relative paths"""
-    current_dir = os.path.dirname(os.path.abspath(__file__))
+    """Load team data using paths that work both locally and in cloud"""
+    try:
+        # First try local path
+        with open('team_logos.txt', 'r') as file:
+            logos = dict(line.strip().split(': ') for line in file if line.strip())
+        
+        with open('team_colors.txt', 'r') as file:
+            colors = {}
+            for line in file:
+                if ': ' in line:
+                    team, color_str = line.strip().split(': ')
+                    primary_color = color_str.split(',')[0].strip()
+                    colors[team] = primary_color.replace('#', '')
+    except FileNotFoundError:
+        # Try alternative path
+        with open('webpage/pages/team_logos.txt', 'r') as file:
+            logos = dict(line.strip().split(': ') for line in file if line.strip())
+        
+        with open('webpage/pages/team_colors.txt', 'r') as file:
+            colors = {}
+            for line in file:
+                if ': ' in line:
+                    team, color_str = line.strip().split(': ')
+                    primary_color = color_str.split(',')[0].strip()
+                    colors[team] = primary_color.replace('#', '')
     
-    # Read logos
-    logos_path = os.path.join(current_dir, 'team_logos.txt')
-    with open(logos_path, 'r') as file:
-        logos = dict(line.strip().split(': ') for line in file if line.strip())
-    
-    # Read colors
-    colors_path = os.path.join(current_dir, 'team_colors.txt')
-    with open(colors_path, 'r') as file:
-        colors = {}
-        for line in file:
-            if ': ' in line:
-                team, color_str = line.strip().split(': ')
-                primary_color = color_str.split(',')[0].strip()
-                colors[team] = primary_color.replace('#', '')
-                
-    # Print debug info
     print(f"Loaded {len(logos)} logos and {len(colors)} colors")
-    
     return logos, colors
 
 def load_rankings_data():
-    """Load rankings using correct relative paths"""
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    rankings = {}
-    
+    """Load rankings using paths that work both locally and in cloud"""
     try:
-        with open(os.path.join(current_dir, 'rankings.txt'), 'r') as file:
-            for line in file:
-                line = line.strip()
-                if line and ': ' in line:
-                    team, rank = line.split(': ')
-                    rankings[team] = rank
+        # First try local path
+        with open('rankings.txt', 'r') as file:
+            rankings = dict(line.strip().split(': ') for line in file if line.strip())
     except FileNotFoundError:
-        print("Rankings file not found")
-        rankings = {}
-        
-    # Print debug info
-    print(f"Loaded {len(rankings)} rankings")
+        # Try alternative path
+        try:
+            with open('webpage/pages/rankings.txt', 'r') as file:
+                rankings = dict(line.strip().split(': ') for line in file if line.strip())
+        except FileNotFoundError:
+            print("Rankings file not found")
+            rankings = {}
     
+    print(f"Loaded {len(rankings)} rankings")
     return rankings
 
 def create_team_df(teams, logos, colors, rankings):
