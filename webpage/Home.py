@@ -111,6 +111,12 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+    <div class="paragraph">
+    Notes for week of 18NOV24: None
+    </div>
+""", unsafe_allow_html=True)
+
 # Centered download button
 col1, col2, col3 = st.columns([2, 1, 2])
 
