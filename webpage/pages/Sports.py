@@ -146,7 +146,7 @@ with st.sidebar:
     st.title("Sports Categories")
     sports_nav = st.radio(
         "Select Sport",
-        ["Baseball", "Football", "NFL Big Data Bowl '25 (Kaggle Competition)"],
+        ["Football", "NFL Big Data Bowl '25 (Kaggle Competition)"],
         key="sports_nav",
         label_visibility="collapsed"
     )
