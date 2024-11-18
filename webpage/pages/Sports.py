@@ -267,11 +267,6 @@ if sports_nav == "Football":
                 unsafe_allow_html=True
             )
 
-
-elif sports_nav == "Baseball":
-    st.header("Baseball Analytics")
-    st.write("Coming Soon!")
-
 elif sports_nav == "NFL Big Data Bowl '25 (Kaggle Competition)":
     st.header("NFL Big Data Bowl '25")
     st.write("Coming Soon!")
