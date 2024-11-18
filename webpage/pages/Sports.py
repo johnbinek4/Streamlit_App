@@ -66,12 +66,18 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 def load_team_data():
+    """Load team data using correct relative paths"""
+    import os
+    
+    # Get current file's directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
     # Read logos
-    with open('team_logos.txt', 'r') as file:  # Changed path
+    with open(os.path.join(current_dir, 'team_logos.txt'), 'r') as file:
         logos = dict(line.strip().split(': ') for line in file if line.strip())
     
     # Read colors
-    with open('team_colors.txt', 'r') as file:  # Changed path
+    with open(os.path.join(current_dir, 'team_colors.txt'), 'r') as file:
         colors = {}
         for line in file:
             if ': ' in line:
@@ -82,12 +88,16 @@ def load_team_data():
     return logos, colors
 
 def load_rankings_data():
-    # Read power rankings
+    """Load rankings using correct relative paths"""
+    import os
+    
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
     try:
-        with open('power_rankings.txt', 'r') as file:  # Changed path
+        with open(os.path.join(current_dir, 'rankings.txt'), 'r') as file:
             rankings = dict(line.strip().split(': ') for line in file if line.strip())
     except FileNotFoundError:
-        rankings = {}  # Default empty if file doesn't exist yet
+        rankings = {}
     return rankings
 
 def create_team_df(teams, logos, colors, rankings):
