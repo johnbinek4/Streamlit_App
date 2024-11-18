@@ -165,7 +165,6 @@ if sports_nav == "Football":
        </div>
    """, unsafe_allow_html=True)
 
-   print("\n=== Starting Data Loading ===")
    # Load all data
    logos, colors = load_team_data()
    rankings = load_rankings_data()
@@ -186,16 +185,25 @@ if sports_nav == "Football":
    afc_df = afc_df.sort_values('Rank')
    nfc_df = nfc_df.sort_values('Rank')
 
-   # Display both conferences using flex layout
    st.markdown("""
-   <div style="display: flex; gap: 20px; width: 100%;">
-       <div style="flex: 1;">
+   <style>
+   .container {
+       display: flex;
+       gap: 20px;
+   }
+   .column {
+       flex: 1;
+       width: 50%;
+   }
+   </style>
+
+   <div class="container">
+       <div class="column">
            <div class="conference-box afc-box">
                <div class="conference-title">AFC</div>
-               <div class="team-rows-container">
    """, unsafe_allow_html=True)
-   
-   # Add AFC teams
+
+   # AFC teams
    for _, row in afc_df.iterrows():
        st.markdown(f"""
            <div class="team-row" style="background-color: {row['Background']}">
@@ -207,18 +215,15 @@ if sports_nav == "Football":
            </div>
        """, unsafe_allow_html=True)
 
-   # Close AFC container and start NFC
    st.markdown("""
-               </div>
            </div>
        </div>
-       <div style="flex: 1;">
+       <div class="column">
            <div class="conference-box nfc-box">
                <div class="conference-title">NFC</div>
-               <div class="team-rows-container">
    """, unsafe_allow_html=True)
-   
-   # Add NFC teams
+
+   # NFC teams
    for _, row in nfc_df.iterrows():
        st.markdown(f"""
            <div class="team-row" style="background-color: {row['Background']}">
@@ -230,9 +235,7 @@ if sports_nav == "Football":
            </div>
        """, unsafe_allow_html=True)
 
-   # Close all containers
    st.markdown("""
-               </div>
            </div>
        </div>
    </div>
