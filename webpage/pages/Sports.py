@@ -67,11 +67,11 @@ st.markdown("""
 
 def load_team_data():
     # Read logos
-    with open('webpage/pages/team_logos.txt', 'r') as file:
+    with open('team_logos.txt', 'r') as file:  # Changed path
         logos = dict(line.strip().split(': ') for line in file if line.strip())
     
     # Read colors
-    with open('webpage/pages/team_colors.txt', 'r') as file:
+    with open('team_colors.txt', 'r') as file:  # Changed path
         colors = {}
         for line in file:
             if ': ' in line:
@@ -84,7 +84,7 @@ def load_team_data():
 def load_rankings_data():
     # Read power rankings
     try:
-        with open('webpage/pages/power_rankings.txt', 'r') as file:
+        with open('power_rankings.txt', 'r') as file:  # Changed path
             rankings = dict(line.strip().split(': ') for line in file if line.strip())
     except FileNotFoundError:
         rankings = {}  # Default empty if file doesn't exist yet
