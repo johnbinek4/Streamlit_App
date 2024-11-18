@@ -185,27 +185,14 @@ if sports_nav == "Football":
    afc_df = afc_df.sort_values('Rank')
    nfc_df = nfc_df.sort_values('Rank')
 
-   st.markdown("""
-   <style>
-   .container {
-       display: flex;
-       gap: 20px;
-   }
-   .column {
-       flex: 1;
-       width: 50%;
-   }
-   </style>
+   # Create columns
+   col1, col2 = st.columns(2)
 
-   <div class="container">
-       <div class="column">
-           <div class="conference-box afc-box">
-               <div class="conference-title">AFC</div>
-   """, unsafe_allow_html=True)
-
-   # AFC teams
-   for _, row in afc_df.iterrows():
-       st.markdown(f"""
+   with col1:
+       afc_content = f"""
+       <div class="conference-box afc-box">
+           <div class="conference-title">AFC</div>
+           {''.join([f'''
            <div class="team-row" style="background-color: {row['Background']}">
                <div class="rank-column">{row['Rank']}</div>
                <div class="team-info">
@@ -213,19 +200,16 @@ if sports_nav == "Football":
                    <span style="margin-left: 15px">{row['Team']}</span>
                </div>
            </div>
-       """, unsafe_allow_html=True)
-
-   st.markdown("""
-           </div>
+           ''' for _, row in afc_df.iterrows()])}
        </div>
-       <div class="column">
-           <div class="conference-box nfc-box">
-               <div class="conference-title">NFC</div>
-   """, unsafe_allow_html=True)
+       """
+       st.markdown(afc_content, unsafe_allow_html=True)
 
-   # NFC teams
-   for _, row in nfc_df.iterrows():
-       st.markdown(f"""
+   with col2:
+       nfc_content = f"""
+       <div class="conference-box nfc-box">
+           <div class="conference-title">NFC</div>
+           {''.join([f'''
            <div class="team-row" style="background-color: {row['Background']}">
                <div class="rank-column">{row['Rank']}</div>
                <div class="team-info">
@@ -233,13 +217,10 @@ if sports_nav == "Football":
                    <span style="margin-left: 15px">{row['Team']}</span>
                </div>
            </div>
-       """, unsafe_allow_html=True)
-
-   st.markdown("""
-           </div>
+           ''' for _, row in nfc_df.iterrows()])}
        </div>
-   </div>
-   """, unsafe_allow_html=True)
+       """
+       st.markdown(nfc_content, unsafe_allow_html=True)
 
 elif sports_nav == "Baseball":
     st.header("Baseball Analytics")
