@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 
 # Set the page title and layout
 st.set_page_config(page_title="Sports Analytics", layout="wide")
@@ -67,22 +68,15 @@ st.markdown("""
 
 def load_team_data():
     """Load team data using correct relative paths"""
-    import os
-    
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    
-    # Debug prints
-    print(f"Current directory: {current_dir}")
     
     # Read logos
     logos_path = os.path.join(current_dir, 'team_logos.txt')
-    print(f"Looking for logos at: {logos_path}")
     with open(logos_path, 'r') as file:
         logos = dict(line.strip().split(': ') for line in file if line.strip())
     
     # Read colors
     colors_path = os.path.join(current_dir, 'team_colors.txt')
-    print(f"Looking for colors at: {colors_path}")
     with open(colors_path, 'r') as file:
         colors = {}
         for line in file:
@@ -90,23 +84,31 @@ def load_team_data():
                 team, color_str = line.strip().split(': ')
                 primary_color = color_str.split(',')[0].strip()
                 colors[team] = primary_color.replace('#', '')
-    
-    # Debug prints
-    print(f"Found {len(logos)} logos and {len(colors)} colors")
+                
+    # Print debug info
+    print(f"Loaded {len(logos)} logos and {len(colors)} colors")
     
     return logos, colors
 
 def load_rankings_data():
     """Load rankings using correct relative paths"""
-    import os
-    
     current_dir = os.path.dirname(os.path.abspath(__file__))
+    rankings = {}
     
     try:
         with open(os.path.join(current_dir, 'rankings.txt'), 'r') as file:
-            rankings = dict(line.strip().split(': ') for line in file if line.strip())
+            for line in file:
+                line = line.strip()
+                if line and ': ' in line:
+                    team, rank = line.split(': ')
+                    rankings[team] = rank
     except FileNotFoundError:
+        print("Rankings file not found")
         rankings = {}
+        
+    # Print debug info
+    print(f"Loaded {len(rankings)} rankings")
+    
     return rankings
 
 def create_team_df(teams, logos, colors, rankings):
@@ -161,21 +163,28 @@ if sports_nav == "Football":
     logos, colors = load_team_data()
     rankings = load_rankings_data()
     
-    # Create team lists
-    afc_teams = ['BAL', 'BUF', 'CIN', 'CLE', 'DEN', 'HOU', 'IND', 'JAX', 
-                 'KC', 'LV', 'LAC', 'MIA', 'NE', 'NYJ', 'PIT', 'TEN']
+    # Print debug info
+    print("Data loaded, creating team lists...")
     
-    nfc_teams = ['ARI', 'ATL', 'CAR', 'CHI', 'DAL', 'DET', 'GB', 'LAR',
-                 'MIN', 'NO', 'NYG', 'PHI', 'SF', 'SEA', 'TB', 'WAS']
-    
+    # Create team lists with conference separation
+    afc_teams = ['PIT', 'KC', 'BAL', 'MIA', 'JAX', 'BUF', 'CLE', 'HOU', 'IND', 'LAC', 
+                 'CIN', 'NYJ', 'TEN', 'LV', 'DEN', 'NE']
+    nfc_teams = ['SF', 'DAL', 'PHI', 'DET', 'SEA', 'MIN', 'GB', 'ATL', 'NO', 'TB', 
+                 'CHI', 'LAR', 'NYG', 'WAS', 'ARI', 'CAR']
     
     # Create DataFrames
     afc_df = create_team_df(afc_teams, logos, colors, rankings)
     nfc_df = create_team_df(nfc_teams, logos, colors, rankings)
     
-    print(f"AFC Teams: {afc_teams}")
-    print(f"Loaded rankings: {rankings}")
-    print(f"AFC DataFrame: {afc_df}")
+    # Sort DataFrames by ranking
+    afc_df['Rank'] = pd.to_numeric(afc_df['Rank'])
+    nfc_df['Rank'] = pd.to_numeric(nfc_df['Rank'])
+    afc_df = afc_df.sort_values('Rank')
+    nfc_df = nfc_df.sort_values('Rank')
+    
+    # Print debug info
+    print(f"AFC DataFrame: {len(afc_df)} rows")
+    print(f"NFC DataFrame: {len(nfc_df)} rows")
     
     # Create two columns
     col1, col2 = st.columns(2)
