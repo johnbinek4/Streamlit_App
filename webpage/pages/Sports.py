@@ -188,21 +188,24 @@ if sports_nav == "Football":
     # Create columns for layout
     col1, col2 = st.columns(2)
 
-    # AFC Column with encompassing box
+    # AFC Column
     with col1:
-        st.markdown('''
-            <div class="conference-container" style="
+        # Create a container div for AFC
+        afc_html = '''
+            <div style="
                 background-color: rgba(207, 20, 43, 0.05);
                 border: 3px solid #CF142B;
                 border-radius: 10px;
                 padding: 20px;
                 height: 100%;
-                ">
-                <h3 style="text-align: center; color: #CF142B; margin-bottom: 20px;">AFC</h3>
-        ''', unsafe_allow_html=True)
+                margin-bottom: 20px;
+            ">
+            <h3 style="text-align: center; color: #CF142B; margin-bottom: 20px;">AFC</h3>
+        '''
         
+        # Add all AFC teams to the container
         for _, row in afc_df.iterrows():
-            st.markdown(f'''
+            afc_html += f'''
                 <div class="team-row" style="background-color: {row['Background']}">
                     <div class="rank-column">{row['Rank']}</div>
                     <div class="team-info">
@@ -210,25 +213,32 @@ if sports_nav == "Football":
                         <span style="margin-left: 15px">{row['Team']}</span>
                     </div>
                 </div>
-            ''', unsafe_allow_html=True)
+            '''
         
-        st.markdown('</div>', unsafe_allow_html=True)
+        # Close the container
+        afc_html += '</div>'
+        
+        # Render the entire AFC container as a single HTML block
+        st.markdown(afc_html, unsafe_allow_html=True)
 
-    # NFC Column with encompassing box
+    # NFC Column
     with col2:
-        st.markdown('''
-            <div class="conference-container" style="
+        # Create a container div for NFC
+        nfc_html = '''
+            <div style="
                 background-color: rgba(0, 51, 141, 0.05);
                 border: 3px solid #00338D;
                 border-radius: 10px;
                 padding: 20px;
                 height: 100%;
-                ">
-                <h3 style="text-align: center; color: #00338D; margin-bottom: 20px;">NFC</h3>
-        ''', unsafe_allow_html=True)
+                margin-bottom: 20px;
+            ">
+            <h3 style="text-align: center; color: #00338D; margin-bottom: 20px;">NFC</h3>
+        '''
         
+        # Add all NFC teams to the container
         for _, row in nfc_df.iterrows():
-            st.markdown(f'''
+            nfc_html += f'''
                 <div class="team-row" style="background-color: {row['Background']}">
                     <div class="rank-column">{row['Rank']}</div>
                     <div class="team-info">
@@ -236,9 +246,13 @@ if sports_nav == "Football":
                         <span style="margin-left: 15px">{row['Team']}</span>
                     </div>
                 </div>
-            ''', unsafe_allow_html=True)
+            '''
         
-        st.markdown('</div>', unsafe_allow_html=True)
+        # Close the container
+        nfc_html += '</div>'
+        
+        # Render the entire NFC container as a single HTML block
+        st.markdown(nfc_html, unsafe_allow_html=True)
 
 elif sports_nav == "Baseball":
     st.header("Baseball Analytics")
