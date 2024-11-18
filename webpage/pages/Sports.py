@@ -205,31 +205,36 @@ if sports_nav == "Football":
     
     print("\n=== Creating Columns ===")
     # Create two columns
-    st.write("Testing AFC Display:")
-    st.markdown('''
-    <div class="conference-box afc-box">
-        <div class="conference-title">AFC Test</div>
-        <div class="team-row" style="background-color: #241773">
-            <div class="rank-column">1</div>
-            <div class="team-info">
-                <span style="margin-left: 15px">TEST AFC</span>
+     # Create two columns for testing
+    col1, col2 = st.columns(2)
+    
+    # Test AFC Display in left column
+    with col1:
+        st.markdown('''
+        <div class="conference-box afc-box">
+            <div class="conference-title">AFC Test</div>
+            <div class="team-row" style="background-color: #241773">
+                <div class="rank-column">1</div>
+                <div class="team-info">
+                    <span style="margin-left: 15px">TEST AFC</span>
+                </div>
             </div>
         </div>
-    </div>
-    ''', unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
 
-    st.write("Testing NFC Display:")
-    st.markdown('''
-    <div class="conference-box nfc-box">
-        <div class="conference-title">NFC Test</div>
-        <div class="team-row" style="background-color: #97233F">
-            <div class="rank-column">1</div>
-            <div class="team-info">
-                <span style="margin-left: 15px">TEST NFC</span>
+    # Test NFC Display in right column
+    with col2:
+        st.markdown('''
+        <div class="conference-box nfc-box">
+            <div class="conference-title">NFC Test</div>
+            <div class="team-row" style="background-color: #97233F">
+                <div class="rank-column">1</div>
+                <div class="team-info">
+                    <span style="margin-left: 15px">TEST NFC</span>
+                </div>
             </div>
         </div>
-    </div>
-    ''', unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
 
 elif sports_nav == "Baseball":
     st.header("Baseball Analytics")
