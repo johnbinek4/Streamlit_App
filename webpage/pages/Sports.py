@@ -205,35 +205,31 @@ if sports_nav == "Football":
     
     print("\n=== Creating Columns ===")
     # Create two columns
-    col1, col2 = st.columns(2)
-    
-    # AFC Column
-    with col1:
-        print("\nCreating AFC content...")
-        afc_content = f'''
-        <div class="conference-box afc-box">
-            <div class="conference-title">AFC</div>
-            {create_team_rows(afc_df)}
+    st.write("Testing AFC Display:")
+    st.markdown('''
+    <div class="conference-box afc-box">
+        <div class="conference-title">AFC Test</div>
+        <div class="team-row" style="background-color: #241773">
+            <div class="rank-column">1</div>
+            <div class="team-info">
+                <span style="margin-left: 15px">TEST AFC</span>
+            </div>
         </div>
-        '''
-        print("AFC HTML length:", len(afc_content))
-        print("Displaying AFC content...")
-        st.markdown(afc_content, unsafe_allow_html=True)
-        print("AFC content displayed")
-    
-    # NFC Column
-    with col2:
-        print("\nCreating NFC content...")
-        nfc_content = f'''
-        <div class="conference-box nfc-box">
-            <div class="conference-title">NFC</div>
-            {create_team_rows(nfc_df)}
+    </div>
+    ''', unsafe_allow_html=True)
+
+    st.write("Testing NFC Display:")
+    st.markdown('''
+    <div class="conference-box nfc-box">
+        <div class="conference-title">NFC Test</div>
+        <div class="team-row" style="background-color: #97233F">
+            <div class="rank-column">1</div>
+            <div class="team-info">
+                <span style="margin-left: 15px">TEST NFC</span>
+            </div>
         </div>
-        '''
-        print("NFC HTML length:", len(nfc_content))
-        print("Displaying NFC content...")
-        st.markdown(nfc_content, unsafe_allow_html=True)
-        print("NFC content displayed")
+    </div>
+    ''', unsafe_allow_html=True)
 
 elif sports_nav == "Baseball":
     st.header("Baseball Analytics")
