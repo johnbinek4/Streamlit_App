@@ -190,6 +190,9 @@ if sports_nav == "Football":
 
    # AFC Column
    with col1:
+       st.markdown('''
+           <div style="background-color: rgba(207, 20, 43, 0.05); border: 3px solid #CF142B; padding: 20px; border-radius: 10px;">
+       ''', unsafe_allow_html=True)
        st.markdown("### AFC")
        for _, row in afc_df.iterrows():
            st.markdown(f'''
@@ -201,9 +204,13 @@ if sports_nav == "Football":
                    </div>
                </div>
            ''', unsafe_allow_html=True)
+       st.markdown('</div>', unsafe_allow_html=True)
 
    # NFC Column
    with col2:
+       st.markdown('''
+           <div style="background-color: rgba(0, 51, 141, 0.05); border: 3px solid #00338D; padding: 20px; border-radius: 10px;">
+       ''', unsafe_allow_html=True)
        st.markdown("### NFC")
        for _, row in nfc_df.iterrows():
            st.markdown(f'''
@@ -215,6 +222,7 @@ if sports_nav == "Football":
                    </div>
                </div>
            ''', unsafe_allow_html=True)
+       st.markdown('</div>', unsafe_allow_html=True)
 
 elif sports_nav == "Baseball":
     st.header("Baseball Analytics")
