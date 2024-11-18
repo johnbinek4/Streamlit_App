@@ -69,21 +69,30 @@ def load_team_data():
     """Load team data using correct relative paths"""
     import os
     
-    # Get current file's directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
     
+    # Debug prints
+    print(f"Current directory: {current_dir}")
+    
     # Read logos
-    with open(os.path.join(current_dir, 'team_logos.txt'), 'r') as file:
+    logos_path = os.path.join(current_dir, 'team_logos.txt')
+    print(f"Looking for logos at: {logos_path}")
+    with open(logos_path, 'r') as file:
         logos = dict(line.strip().split(': ') for line in file if line.strip())
     
     # Read colors
-    with open(os.path.join(current_dir, 'team_colors.txt'), 'r') as file:
+    colors_path = os.path.join(current_dir, 'team_colors.txt')
+    print(f"Looking for colors at: {colors_path}")
+    with open(colors_path, 'r') as file:
         colors = {}
         for line in file:
             if ': ' in line:
                 team, color_str = line.strip().split(': ')
                 primary_color = color_str.split(',')[0].strip()
                 colors[team] = primary_color.replace('#', '')
+    
+    # Debug prints
+    print(f"Found {len(logos)} logos and {len(colors)} colors")
     
     return logos, colors
 
@@ -159,9 +168,14 @@ if sports_nav == "Football":
     nfc_teams = ['ARI', 'ATL', 'CAR', 'CHI', 'DAL', 'DET', 'GB', 'LAR',
                  'MIN', 'NO', 'NYG', 'PHI', 'SF', 'SEA', 'TB', 'WAS']
     
+    
     # Create DataFrames
     afc_df = create_team_df(afc_teams, logos, colors, rankings)
     nfc_df = create_team_df(nfc_teams, logos, colors, rankings)
+    
+    print(f"AFC Teams: {afc_teams}")
+    print(f"Loaded rankings: {rankings}")
+    print(f"AFC DataFrame: {afc_df}")
     
     # Create two columns
     col1, col2 = st.columns(2)
