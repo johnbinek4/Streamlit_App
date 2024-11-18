@@ -206,11 +206,18 @@ if sports_nav == "Football":
     print("\n=== Creating Columns ===")
     # Create two columns
      # Create two columns for testing
-    col1, col2 = st.columns(2)
+    # Test both displays using CSS Grid
+    st.markdown("""
+    <style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        width: 100%;
+    }
+    </style>
     
-    # Test AFC Display in left column
-    with col1:
-        st.markdown('''
+    <div class="grid-container">
         <div class="conference-box afc-box">
             <div class="conference-title">AFC Test</div>
             <div class="team-row" style="background-color: #241773">
@@ -220,11 +227,7 @@ if sports_nav == "Football":
                 </div>
             </div>
         </div>
-        ''', unsafe_allow_html=True)
-
-    # Test NFC Display in right column
-    with col2:
-        st.markdown('''
+        
         <div class="conference-box nfc-box">
             <div class="conference-title">NFC Test</div>
             <div class="team-row" style="background-color: #97233F">
@@ -234,7 +237,8 @@ if sports_nav == "Football":
                 </div>
             </div>
         </div>
-        ''', unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
 elif sports_nav == "Baseball":
     st.header("Baseball Analytics")
