@@ -186,73 +186,97 @@ if sports_nav == "Football":
     nfc_df = nfc_df.sort_values('Rank')
 
     # Create columns for layout
+    import streamlit as st
+import pandas as pd
+import os
+
+# [Previous code remains the same until the columns section]
+
+if sports_nav == "Football":
+    # [Previous code remains the same until the columns section]
+    
+    # Create columns
     col1, col2 = st.columns(2)
 
     # AFC Column
     with col1:
-        # Create a container div for AFC
-        afc_html = '''
+        # Create the container for AFC
+        st.markdown("""
             <div style="
                 background-color: rgba(207, 20, 43, 0.05);
                 border: 3px solid #CF142B;
                 border-radius: 10px;
                 padding: 20px;
-                height: 100%;
                 margin-bottom: 20px;
             ">
             <h3 style="text-align: center; color: #CF142B; margin-bottom: 20px;">AFC</h3>
-        '''
+        """, unsafe_allow_html=True)
         
-        # Add all AFC teams to the container
+        # Add each team row individually
         for _, row in afc_df.iterrows():
-            afc_html += f'''
-                <div class="team-row" style="background-color: {row['Background']}">
-                    <div class="rank-column">{row['Rank']}</div>
-                    <div class="team-info">
+            st.markdown(f"""
+                <div style="
+                    display: grid;
+                    grid-template-columns: 50px auto;
+                    align-items: center;
+                    padding: 12px 15px;
+                    border-radius: 5px;
+                    margin: 8px 0;
+                    background-color: {row['Background']};
+                    color: white;
+                ">
+                    <div style="font-size: 20px; font-weight: bold; text-align: center;">
+                        {row['Rank']}
+                    </div>
+                    <div style="display: flex; align-items: center;">
                         <img src="{row['Logo']}" style="height:40px;">
                         <span style="margin-left: 15px">{row['Team']}</span>
                     </div>
                 </div>
-            '''
+            """, unsafe_allow_html=True)
         
-        # Close the container
-        afc_html += '</div>'
-        
-        # Render the entire AFC container as a single HTML block
-        st.markdown(afc_html, unsafe_allow_html=True)
+        # Close the AFC container
+        st.markdown("</div>", unsafe_allow_html=True)
 
     # NFC Column
     with col2:
-        # Create a container div for NFC
-        nfc_html = '''
+        # Create the container for NFC
+        st.markdown("""
             <div style="
                 background-color: rgba(0, 51, 141, 0.05);
                 border: 3px solid #00338D;
                 border-radius: 10px;
                 padding: 20px;
-                height: 100%;
                 margin-bottom: 20px;
             ">
             <h3 style="text-align: center; color: #00338D; margin-bottom: 20px;">NFC</h3>
-        '''
+        """, unsafe_allow_html=True)
         
-        # Add all NFC teams to the container
+        # Add each team row individually
         for _, row in nfc_df.iterrows():
-            nfc_html += f'''
-                <div class="team-row" style="background-color: {row['Background']}">
-                    <div class="rank-column">{row['Rank']}</div>
-                    <div class="team-info">
+            st.markdown(f"""
+                <div style="
+                    display: grid;
+                    grid-template-columns: 50px auto;
+                    align-items: center;
+                    padding: 12px 15px;
+                    border-radius: 5px;
+                    margin: 8px 0;
+                    background-color: {row['Background']};
+                    color: white;
+                ">
+                    <div style="font-size: 20px; font-weight: bold; text-align: center;">
+                        {row['Rank']}
+                    </div>
+                    <div style="display: flex; align-items: center;">
                         <img src="{row['Logo']}" style="height:40px;">
                         <span style="margin-left: 15px">{row['Team']}</span>
                     </div>
                 </div>
-            '''
+            """, unsafe_allow_html=True)
         
-        # Close the container
-        nfc_html += '</div>'
-        
-        # Render the entire NFC container as a single HTML block
-        st.markdown(nfc_html, unsafe_allow_html=True)
+        # Close the NFC container
+        st.markdown("</div>", unsafe_allow_html=True)
 
 elif sports_nav == "Baseball":
     st.header("Baseball Analytics")
