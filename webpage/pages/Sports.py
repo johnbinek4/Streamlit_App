@@ -156,7 +156,7 @@ if sports_nav == "Football":
     afc_teams = ['BAL', 'BUF', 'CIN', 'CLE', 'DEN', 'HOU', 'IND', 'JAX', 
                  'KC', 'LV', 'LAC', 'MIA', 'NE', 'NYJ', 'PIT', 'TEN']
     
-    nfc_teams = ['ARI', 'ATL', 'CAR', 'CHI', 'DAL', 'DET', 'GB', 'LA',
+    nfc_teams = ['ARI', 'ATL', 'CAR', 'CHI', 'DAL', 'DET', 'GB', 'LAR',
                  'MIN', 'NO', 'NYG', 'PHI', 'SF', 'SEA', 'TB', 'WAS']
     
     # Create DataFrames
