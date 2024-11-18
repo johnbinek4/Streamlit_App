@@ -47,7 +47,7 @@ st.markdown("""
     }
     .team-row {
         display: grid;
-        grid-template-columns: 50px auto; /* Adjust columns as needed */
+        grid-template-columns: 50px auto;
         align-items: center;
         padding: 12px 15px;
         border-radius: 5px;
@@ -121,6 +121,8 @@ def create_team_df(teams, logos, colors, rankings):
         'Background': [f"#{colors.get(team, '000000')}" for team in teams],
         'Rank': [rankings.get(team, '-') for team in teams],
     })
+    print(f"Created DataFrame with {len(df)} teams")
+    print(df)
     return df
 
 def create_team_rows(df):
@@ -136,6 +138,7 @@ def create_team_rows(df):
         </div>
         '''
         rows.append(team_row)
+    print(f"Created {len(rows)} team rows")
     return '\n'.join(rows)
 
 # Add sidebar navigation
@@ -162,55 +165,75 @@ if sports_nav == "Football":
         </div>
     """, unsafe_allow_html=True)
 
+    print("\n=== Starting Data Loading ===")
     # Load all data
     logos, colors = load_team_data()
     rankings = load_rankings_data()
     
-    # Print debug info
-    print("Data loaded, creating team lists...")
+    print("\n=== Debug Information ===")
+    print(f"Logos loaded: {len(logos)}")
+    print(f"Colors loaded: {len(colors)}")
+    print(f"Rankings loaded: {rankings}")
     
-    # Create team lists with conference separation
+    # Create team lists
     afc_teams = ['PIT', 'KC', 'BAL', 'MIA', 'JAX', 'BUF', 'CLE', 'HOU', 'IND', 'LAC', 
                  'CIN', 'NYJ', 'TEN', 'LV', 'DEN', 'NE']
     nfc_teams = ['SF', 'DAL', 'PHI', 'DET', 'SEA', 'MIN', 'GB', 'ATL', 'NO', 'TB', 
                  'CHI', 'LAR', 'NYG', 'WAS', 'ARI', 'CAR']
     
+    print("\nTeam Lists:")
+    print(f"AFC Teams: {afc_teams}")
+    print(f"NFC Teams: {nfc_teams}")
+    
+    print("\n=== Creating DataFrames ===")
     # Create DataFrames
     afc_df = create_team_df(afc_teams, logos, colors, rankings)
     nfc_df = create_team_df(nfc_teams, logos, colors, rankings)
     
+    print("\n=== Sorting DataFrames ===")
     # Sort DataFrames by ranking
     afc_df['Rank'] = pd.to_numeric(afc_df['Rank'])
     nfc_df['Rank'] = pd.to_numeric(nfc_df['Rank'])
     afc_df = afc_df.sort_values('Rank')
     nfc_df = nfc_df.sort_values('Rank')
     
-    # Print debug info
-    print(f"AFC DataFrame: {len(afc_df)} rows")
-    print(f"NFC DataFrame: {len(nfc_df)} rows")
+    print("\nDataFrames after sorting:")
+    print("AFC DataFrame:")
+    print(afc_df)
+    print("\nNFC DataFrame:")
+    print(nfc_df)
     
+    print("\n=== Creating Columns ===")
     # Create two columns
     col1, col2 = st.columns(2)
     
     # AFC Column
     with col1:
+        print("\nCreating AFC content...")
         afc_content = f'''
         <div class="conference-box afc-box">
             <div class="conference-title">AFC</div>
             {create_team_rows(afc_df)}
         </div>
         '''
+        print("AFC HTML length:", len(afc_content))
+        print("Displaying AFC content...")
         st.markdown(afc_content, unsafe_allow_html=True)
+        print("AFC content displayed")
     
     # NFC Column
     with col2:
+        print("\nCreating NFC content...")
         nfc_content = f'''
         <div class="conference-box nfc-box">
             <div class="conference-title">NFC</div>
             {create_team_rows(nfc_df)}
         </div>
         '''
+        print("NFC HTML length:", len(nfc_content))
+        print("Displaying NFC content...")
         st.markdown(nfc_content, unsafe_allow_html=True)
+        print("NFC content displayed")
 
 elif sports_nav == "Baseball":
     st.header("Baseball Analytics")
