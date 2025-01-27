@@ -98,15 +98,14 @@ st.markdown("""
     <div class="paragraph">
     I am currently pursuing a Master's in Quantitative and Computational Finance at the Georgia Institute of Technology, where I also completed my undergraduate degree 
     in Industrial Engineering with a focus on Analytics, Data Science, and Financial Systems. My academic journey includes coursework in Simulation, 
-    Regression, Optimization, Artificial Intelligence, and Machine Learning, providing a strong foundation for practical applications in any techincal field. 
+    Regression, Optimization, Artificial Intelligence, and Machine Learning. 
     </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
     <div class="paragraph">
     Prior to attending Georgia Tech, I served as an Intelligence Specialist with the United States Coast Guard, Department of Homeland Security, and 
-    the National Security Agency. This role developed my leadership, analytical, and strategic planning skills, which continue to inform my approach 
-    to solving real-world problems.  
+    the National Security Agency.  
     </div>
 """, unsafe_allow_html=True)
 
