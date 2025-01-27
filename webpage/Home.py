@@ -89,42 +89,47 @@ st.markdown("""
 # Main content
 st.markdown("""
     <div class="paragraph">
-    Welcome! I'm John Binek, a Master's candidate in Quantitative and Computational Finance at Georgia Tech. 
-    My academic journey combines rigorous quantitative analysis with practical financial applications, 
-    preparing me for the dynamic world of quantitative trading and financial engineering.
+    Welcome, my name is John Binek, and I am a data-driven problem-solver with expertise in Python, R, and SQL. 
+    This page showcases my technical skillset and highlights projects I’ve worked on, reflecting my ability to tackle complex challenges across various domains.
     </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
     <div class="paragraph">
-    With a background in Industrial Engineering and experience in the United States Coast Guard, 
-    I bring a unique perspective to financial analysis. My military service enhanced my leadership abilities 
-    and analytical skills, particularly in intelligence operations and tactical planning.
+    I am currently pursuing a Master's in Quantitative and Computational Finance at the Georgia Institute of Technology, where I also completed my undergraduate degree 
+    in Industrial Engineering with a focus on Analytics, Data Science, and Financial Systems. My academic journey includes coursework in Simulation, 
+    Regression, Optimization, Artificial Intelligence, and Machine Learning, providing a strong foundation for practical applications in any techincal field. 
     </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
     <div class="paragraph">
-    My current focus lies in derivatives pricing, algorithmic trading, and machine learning applications 
-    in finance. I'm particularly interested in market making strategies and volatility trading, 
-    combining theoretical knowledge with practical implementation.
+    Prior to attending Georgia Tech, I served as an Intelligence Specialist with the United States Coast Guard, Department of Homeland Security, and 
+    the National Security Agency. This role developed my leadership, analytical, and strategic planning skills, which continue to inform my approach 
+    to solving real-world problems.  
     </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
     <div class="paragraph">
-    Notes for week of 18NOV24: None
+    Feel free to click the button below to download a copy of my resume, or check out my github (https://github.com/johnbinek4)  
     </div>
 """, unsafe_allow_html=True)
+
+# st.markdown("""
+#     <div class="paragraph">
+#     Notes for week of 18NOV24: None
+#     </div>
+# """, unsafe_allow_html=True)
 
 # Centered download button
 col1, col2, col3 = st.columns([2, 1, 2])
 
 with col2:
-    with open("webpage/JohnBinekQFResume.pdf", "rb") as file:
+    with open("webpage/JohnBinekWebResume.pdf", "rb") as file:
         st.download_button(
             label="Download Resume",
             data=file,
-            file_name="JohnBinekQFResume.pdf",
+            file_name="JohnBinekWebResume.pdf",
             mime="application/pdf"
         )
