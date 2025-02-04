@@ -82,9 +82,9 @@ st.markdown("""
 st.markdown("""
     <div class="nav-links">
         <a href="Finance">Finance</a>
-        <a href="Sports">Sports</a>
     </div>
 """, unsafe_allow_html=True)
+        # <a href="Sports">Sports</a>
 
 # Main content
 st.markdown("""
