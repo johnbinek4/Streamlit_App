@@ -365,7 +365,7 @@ if philosophy_nav == "Performance Dashboard":
 #     Coming Soon
 #     """)
 
-elif philosophy_nav == "Jane Street Real-Time Market Data Forecast (Kaggle Competition)":
-    st.write("""
-    Coming Soon
-    """)
+# elif philosophy_nav == "Jane Street Real-Time Market Data Forecast (Kaggle Competition)":
+#     st.write("""
+#     Coming Soon
+#     """)
