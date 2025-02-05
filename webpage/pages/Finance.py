@@ -209,7 +209,7 @@ with st.sidebar:
     st.title("Trading Philosophy")
     philosophy_nav = st.radio(
         "Trading Strategy Selection",
-        ["Performance Dashboard", "Jane Street Real-Time Market Data Forecast (Kaggle Competition)"],
+        ["Performance Dashboard"],
         key="philosophy_nav",
         label_visibility="collapsed"
     )
@@ -352,20 +352,3 @@ if philosophy_nav == "Performance Dashboard":
         </div>
         """, unsafe_allow_html=True)
 
-# elif philosophy_nav == "Market Maker Exposure":
-#     st.markdown("""
-#     ## Market Maker Hedging Dynamics
-
-#     ### Overview of Market Maker Hedging
-#     Market makers play a crucial role in providing liquidity to financial markets by continuously quoting both buy and sell prices for securities. To maintain profitability while managing risk, market makers must carefully hedge their positions. This process has become increasingly sophisticated with the exponential growth of the derivatives market over the past decade.
-#     """)
-
-# elif philosophy_nav == "Long / Short Volatility":
-#     st.write("""
-#     Coming Soon
-#     """)
-
-# elif philosophy_nav == "Jane Street Real-Time Market Data Forecast (Kaggle Competition)":
-#     st.write("""
-#     Coming Soon
-#     """)
