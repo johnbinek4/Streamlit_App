@@ -334,36 +334,75 @@ if philosophy_nav == "Performance Dashboard":
         fig_dist = go.Figure()
 
         if distribution_period == "Monthly":
-            # Monthly returns distribution
+            # Calculate overall range for consistent binning
+            all_returns = pd.concat([
+                monthly_returns['Portfolio_Return'],
+                monthly_returns['SPXTR_Return']
+            ])
+            min_return = all_returns.min() * 100
+            max_return = all_returns.max() * 100
+            bin_size = (max_return - min_return) / 20  # 20 bins
+            bin_edges = np.arange(min_return, max_return + bin_size, bin_size)
+
+            # Monthly returns distribution with consistent bins
             fig_dist.add_trace(go.Histogram(
                 x=monthly_returns['Portfolio_Return'] * 100,
                 name='Portfolio',
                 opacity=0.75,
-                nbinsx=20
+                xbins=dict(
+                    start=min_return,
+                    end=max_return,
+                    size=bin_size
+                ),
+                autobinx=False
             ))
 
             fig_dist.add_trace(go.Histogram(
                 x=monthly_returns['SPXTR_Return'] * 100,
                 name='SPXTR Index',
                 opacity=0.75,
-                nbinsx=20
+                xbins=dict(
+                    start=min_return,
+                    end=max_return,
+                    size=bin_size
+                ),
+                autobinx=False
             ))
 
             x_title = 'Monthly Return (%)'
         else:
-            # Daily returns distribution
+            # Same approach for daily returns
+            all_returns = pd.concat([
+                df['Portfolio_Return'].dropna(),
+                df['SPXTR_Return'].dropna()
+            ])
+            min_return = all_returns.min() * 100
+            max_return = all_returns.max() * 100
+            bin_size = (max_return - min_return) / 30  # 30 bins
+            bin_edges = np.arange(min_return, max_return + bin_size, bin_size)
+
             fig_dist.add_trace(go.Histogram(
                 x=df['Portfolio_Return'].dropna() * 100,
                 name='Portfolio',
                 opacity=0.75,
-                nbinsx=30
+                xbins=dict(
+                    start=min_return,
+                    end=max_return,
+                    size=bin_size
+                ),
+                autobinx=False
             ))
 
             fig_dist.add_trace(go.Histogram(
                 x=df['SPXTR_Return'].dropna() * 100,
                 name='SPXTR Index',
                 opacity=0.75,
-                nbinsx=30
+                xbins=dict(
+                    start=min_return,
+                    end=max_return,
+                    size=bin_size
+                ),
+                autobinx=False
             ))
 
             x_title = 'Daily Return (%)'
