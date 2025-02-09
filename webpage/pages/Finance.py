@@ -308,10 +308,19 @@ if philosophy_nav == "Performance Dashboard":
 
         st.plotly_chart(fig, use_container_width=True)
 
-        # Create monthly returns distribution
-        fig_dist = go.Figure()
+        # Add distribution period selector
+    distribution_period = st.radio(
+        "Return Distribution Period",
+        ["Monthly", "Daily"],
+        horizontal=True,
+        key="distribution_period"
+    )
 
-        # Add histogram for Portfolio returns
+    # Create distribution figure
+    fig_dist = go.Figure()
+
+    if distribution_period == "Monthly":
+        # Monthly returns distribution
         fig_dist.add_trace(go.Histogram(
             x=monthly_returns['Portfolio_Return'] * 100,
             name='Portfolio',
@@ -319,7 +328,6 @@ if philosophy_nav == "Performance Dashboard":
             nbinsx=20
         ))
 
-        # Add histogram for SPXTR returns
         fig_dist.add_trace(go.Histogram(
             x=monthly_returns['SPXTR_Return'] * 100,
             name='SPXTR Index',
@@ -327,28 +335,46 @@ if philosophy_nav == "Performance Dashboard":
             nbinsx=20
         ))
 
-        fig_dist.update_layout(
-            title='Monthly Returns Distribution',
-            title_x=0.5,
-            xaxis_title='Monthly Return (%)',
-            yaxis_title='Frequency',
-            barmode='overlay',
-            template="plotly_dark",
-            height=300,
-            margin=dict(l=0, r=0, t=40, b=0),
-            showlegend=True,
-            legend=dict(
-                yanchor="top",
-                y=0.99,
-                xanchor="left",
-                x=0.01
-            )
+        x_title = 'Monthly Return (%)'
+    else:
+        # Daily returns distribution
+        fig_dist.add_trace(go.Histogram(
+            x=df['Portfolio_Return'].dropna() * 100,
+            name='Portfolio',
+            opacity=0.75,
+            nbinsx=30
+        ))
+
+        fig_dist.add_trace(go.Histogram(
+            x=df['SPXTR_Return'].dropna() * 100,
+            name='SPXTR Index',
+            opacity=0.75,
+            nbinsx=30
+        ))
+
+        x_title = 'Daily Return (%)'
+
+    fig_dist.update_layout(
+        title=f'{distribution_period} Returns Distribution',
+        title_x=0.5,
+        xaxis_title=x_title,
+        yaxis_title='Frequency',
+        barmode='overlay',
+        template="plotly_dark",
+        height=300,
+        margin=dict(l=0, r=0, t=40, b=0),
+        showlegend=True,
+        legend=dict(
+            yanchor="top",
+            y=0.99,
+            xanchor="left",
+            x=0.01
         )
+    )
 
-        st.plotly_chart(fig_dist, use_container_width=True)
-        st.markdown("""
-        <div style='text-align: center; color: #666666; font-size: 12px; font-style: italic; padding: 20px 0px;'>
-        Disclaimer: Performance values are derived from broker-provided daily account balance calculations and may not precisely reflect actual account values at every point in time.
-        </div>
-        """, unsafe_allow_html=True)
-
+    st.plotly_chart(fig_dist, use_container_width=True)
+    st.markdown("""
+    <div style='text-align: center; color: #666666; font-size: 12px; font-style: italic; padding: 20px 0px;'>
+    Disclaimer: Performance values are derived from broker-provided daily account balance calculations and may not precisely reflect actual account values at every point in time.
+    </div>
+    """, unsafe_allow_html=True)
