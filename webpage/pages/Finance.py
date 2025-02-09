@@ -233,20 +233,34 @@ if philosophy_nav == "Performance Dashboard":
         
         # Display the dataframe with exact height
         st.dataframe(
-            metrics_df,
+            data=metrics_df,
             column_config={
-                "Metric": st.column_config.Column(
+                "Metric": st.column_config.TextColumn(
                     "Metric",
                     width=200,
+                    help={
+                        "Sharpe Ratio (Ann.)": "Risk-adjusted return measure: (Portfolio Return - Risk Free Rate) / Portfolio Standard Deviation. Annualized using daily returns × √252.\n\nInterpretation:\n• < 0: Poor risk-adjusted returns\n• 0-1: Suboptimal\n• 1-2: Good\n• > 2: Excellent\n\nTop hedge funds typically maintain ratios above 1.5.",
+                        "Sortino Ratio (Ann.)": "Similar to Sharpe ratio but only penalizes downside volatility: Annualized Return / Annualized Downside Standard Deviation.\n\nInterpretation:\n• < 0: Poor risk-adjusted returns\n• 0-1: Below average\n• 1-2: Good\n• > 2: Excellent\n\nTypically higher than Sharpe ratio as it ignores upside volatility.",
+                        "Information Ratio": "Measures portfolio returns above the benchmark per unit of tracking error: (Portfolio Return - Benchmark Return) / Tracking Error.\n\nInterpretation:\n• < 0: Underperforming benchmark\n• 0-0.5: Moderate skill\n• 0.5-1: Good skill\n• > 1: Excellent skill\n\nTop managers typically maintain ratios above 0.5.",
+                        "Treynor Ratio": "Risk-adjusted return using beta instead of standard deviation: Annualized Return / Beta.\n\nInterpretation:\n• Should be compared to market return\n• Higher values indicate better risk-adjusted performance\n• Negative values suggest poor risk management",
+                        "Tracking Error (Ann.)": "Standard deviation of the difference between portfolio and benchmark returns, annualized.\n\nInterpretation:\n• < 2%: Very close index tracking\n• 2-5%: Moderate active management\n• 5-10%: Active management\n• > 10%: Highly active management",
+                        "Beta": "Measure of portfolio's volatility compared to the market: Covariance(Portfolio, Benchmark) / Variance(Benchmark).\n\nInterpretation:\n• < 0: Inverse market movement\n• 0-1: Less volatile than market\n• 1: Same as market\n• > 1: More volatile than market",
+                        "Maximum Drawdown": "Largest peak-to-trough decline in portfolio value.\n\nInterpretation:\n• 0-10%: Conservative\n• 10-20%: Moderate\n• 20-30%: Aggressive\n• > 30%: Very aggressive/high risk\n\nS&P 500 typically experiences 10-20% drawdowns every few years.",
+                        "Skewness": "Measures asymmetry in returns distribution.\n\nInterpretation:\n• < -1: Strong negative skew (frequent small gains, rare large losses)\n• -1 to 1: Relatively symmetric\n• > 1: Strong positive skew (frequent small losses, rare large gains)\n\nPositive skewness is generally preferred.",
+                        "Kurtosis": "Measures 'tailedness' of returns distribution.\n\nInterpretation:\n• < 0: Less extreme outcomes than normal distribution\n• ≈ 0: Normal distribution\n• > 0: More extreme outcomes\n• > 3: Significantly 'fat tails'",
+                        "Monthly Info Ratio": "Information ratio using monthly returns.\n\nSimilar interpretation to daily Information Ratio but may better capture longer-term skill.",
+                        "Monthly Sortino (Ann.)": "Sortino ratio using monthly returns (× √12).\n\nTypically more stable than daily Sortino but may miss short-term risks.",
+                        "Monthly Sharpe (Ann.)": "Sharpe ratio using monthly returns (× √12).\n\nTypically more stable than daily Sharpe but may miss short-term risks."
+                    }
                 ),
-                "Value": st.column_config.Column(
+                "Value": st.column_config.TextColumn(
                     "Value",
                     width=150,
                 ),
             },
             hide_index=True,
             use_container_width=True,
-            height=(len(metrics_df) * 35 + 3)  # Precise height calculation based on number of rows
+            height=(len(metrics_df) * 36 + 15)  # Precise height calculation based on number of rows
         )
 
     with col2:
